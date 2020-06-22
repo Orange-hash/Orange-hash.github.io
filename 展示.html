@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>图片切换</title>
+	</head>
+	<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+/*背景当然得选鬼刀啦*/
+body{
+	background: url(img/11.png) no-repeat;
+	background-size: cover;
+}
+/*第一页小图片的样式*/
+.pictureIndex,.IndexCol {
+  padding:20px;
+}
+
+/*小图片的样式*/
+.IndexCol {
+  float: left;
+  width: 25%;
+}
+ 
+/* 弹窗背景 */
+.modal {
+  display: none;
+  position: fixed;
+  /*z-index: 1;*/
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+}
+ 
+/* 弹窗内容 */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+}
+ 
+/* 关闭按钮 */
+.close {
+  color: white;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 55px;
+}
+ 
+/*为关闭按钮添加一些样式，更加生动一些*/ 
+.close:hover,
+.close:focus {
+  color: #999;
+  text-decoration: none;
+}
+
+/* 上一页 & 下一页 按钮 */
+.prev,.next {
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 50px;
+  transition: 0.6s;
+}
+ 
+/* 定位下一页按钮到右侧 */
+.next {
+  right: 0;
+}
+ 
+/* 鼠标移动上去修改背景色为黑色，后面那个0.8是透明度 */
+.prev:hover,.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+ 
+img {
+  margin-bottom: -5px;
+}
+
+/*点击后底部图片设置透明度为0.5*/
+.bottomPic {
+  opacity: 0.5;
+}
+
+/*然后鼠标移入就取消透明度*/
+.active,.bottomPic:hover {
+  opacity: 1;
+}
+
+/*为第一个页面的图片设置一个鼠标移入显示黑边的效果*/
+.hover-shadow:hover {
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.8)
+}
+	</style>
+	
+	<body>
+<h1 style="text-align:center;color: navajowhite;">由于那些图片显示模糊，为了观赏性故用一些图片取而代之</h1>
+ 
+<div class="pictureIndex">
+  <div class="IndexCol">
+    <img src="img/3.png" style="width:100%" onclick="openShow();currentSlide(1)" class="hover-shadow">
+  </div>
+  <div class="IndexCol">
+    <img src="img/4.png" style="width:100%" onclick="openShow();currentSlide(2)" class="hover-shadow">
+  </div>
+  <div class="IndexCol">
+    <img src="img/7.png" style="width:100%" onclick="openShow();currentSlide(3)" class="hover-shadow">
+  </div>
+  <div class="IndexCol">
+    <img src="img/6.png" style="width:100%" onclick="openShow();currentSlide(4)" class="hover-shadow">
+  </div>
+  <div class="IndexCol">
+    <img src="img/1.png" style="width:100%" onclick="openShow();currentSlide(5)" class="hover-shadow">
+  </div>
+  <div class="IndexCol">
+    <img src="img/15.png" style="width:100%" onclick="openShow();currentSlide(6)" class="hover-shadow">
+  </div>
+  <div class="IndexCol">
+    <img src="img/2.jpg" style="width:100%" onclick="openShow();currentSlide(7)" class="hover-shadow">
+  </div>
+  <div class="IndexCol">
+    <img src="img/1.jpg" style="width:100%" onclick="openShow();currentSlide(8)" class="hover-shadow">
+  </div>
+</div>
+ 
+<div id="myModal" class="modal">
+  <span class="close" onclick="closeShow()">&times;</span>
+  <div class="modal-content">
+ 
+    <div class="mySlides">
+      <img src="img/3.png" style="width:100%">
+    </div>
+    <div class="mySlides">
+      <img src="img/4.png" style="width:100%">
+    </div>
+    <div class="mySlides">
+      <img src="img/7.png" style="width:100%">
+    </div>
+    <div class="mySlides">
+      <img src="img/6.png" style="width:100%">
+    </div> 
+     <div class="mySlides">
+      <img src="img/1.png" style="width:100%">
+    </div>   
+     <div class="mySlides">
+      <img src="img/15.png" style="width:100%">
+    </div>
+    <div class="mySlides">
+      <img src="img/2.jpg" style="width:100%">
+    </div>
+    <div class="mySlides">
+      <img src="img/1.jpg" style="width:100%">
+    </div>
+    
+    <a class="prev" onclick="move(-1)">&#10094;</a>
+    <a class="next" onclick="move(1)">&#10095;</a>
+    
+    <div class="IndexCol">
+      <img class="bottomPic" src="img/3.png" style="width:100%" onclick="currentSlide(1)">
+    </div>
+    <div class="IndexCol">
+      <img class="bottomPic" src="img/4.png" style="width:100%" onclick="currentSlide(2)">
+    </div>
+    <div class="IndexCol">
+      <img class="bottomPic" src="img/7.png" style="width:100%" onclick="currentSlide(3)">
+    </div>
+    <div class="IndexCol">
+      <img class="bottomPic" src="img/6.png" style="width:100%" onclick="currentSlide(4)">
+    </div>
+    <div class="IndexCol">
+      <img class="bottomPic" src="img/1.png" style="width:100%" onclick="currentSlide(5)">
+    </div>
+    <div class="IndexCol">
+      <img class="bottomPic" src="img/15.png" style="width:100%" onclick="currentSlide(6)">
+    </div>
+    <div class="IndexCol">
+      <img class="bottomPic" src="img/2.jpg" style="width:100%" onclick="currentSlide(7)">
+    </div>
+    <div class="IndexCol">
+      <img class="bottomPic" src="img/1.jpg" style="width:100%" onclick="currentSlide(8)">
+    </div>
+  </div>
+</div>
+	</body>
+	
+	<script>
+    var slideIndex = 1;
+function openShow() {
+  document.getElementById('myModal').style.display = "block";
+}
+ 
+function closeShow() {
+  document.getElementById('myModal').style.display = "none";
+}
+ 
+function move(n) {
+  showSlides(slideIndex += n);
+}
+ 
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("bottomPic");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace("active","");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+	</script>
+</html>
